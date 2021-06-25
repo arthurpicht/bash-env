@@ -1,0 +1,40 @@
+
+# This file needs to be sourced from .bashrc
+
+
+# repeat command from history
+function h() {
+    eval $(cat ~/.bash_history | fzf +s --tac)
+}
+
+# cd to bookmark
+function b() {
+    bookmark=$(cat ~/.bookmarks | fzf --height 40% --layout=reverse)
+    if [ ! -z "$bookmark" ]; then
+        cd $bookmark
+    else
+        echo $? > /dev/null
+    fi
+}
+
+# cd to direct subdir
+function s() {
+    cd $(ls -1 -d */ | fzf --height 40% --layout=reverse)
+}
+
+# cd to direct subdir, including hidden ones
+function sa() {
+    cd $(find . -maxdepth 1 -type d | fzf --tac --height 40% --layout=reverse)
+}
+
+
+# cd to subdir
+function ss() {
+    cd $(find . -type d -maxdepth 4 | fzf --tac --height 40% --layout=reverse)
+}
+
+# preview files
+function pv() {
+    find . -maxdepth 4 -type f 2> /dev/null | fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}' > /dev/null
+    echo $? > /dev/null
+}

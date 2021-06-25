@@ -1,0 +1,10 @@
+alias l='ls -CF'
+alias ll='ls -lhF'
+alias lll='ls -lahF'
+alias la='ls -A'
+
+alias ..='cd ..'
+
+alias clip='xclip -sel clip'
+alias batp='bat --style=plain'
+alias gitlog='git log --oneline --all --graph --decorate'
