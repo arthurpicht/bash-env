@@ -19,19 +19,39 @@ function b() {
 
 # cd to direct subdir
 function s() {
-    cd $(ls -1 -d */ | fzf --height 40% --layout=reverse)
+    selection=$(ls -1 -d */ | fzf --tac --prompt "${PWD/#$HOME/\~}/")
+    if [ ! -z "$selection" ]; then
+        cd "$selection"
+    else
+        echo $? > /dev/null
+    fi
 }
 
 # cd to direct subdir, including hidden ones
 function sa() {
-    cd $(find . -maxdepth 1 -type d | fzf --tac --height 40% --layout=reverse)
+    cd $(find . -maxdepth 1 -type d | cut -d/ -f2- | sed -e 's/$/\//' | sort | fzf --prompt "${PWD/#$HOME/\~}/")
 }
 
 
 # cd to subdir
 function ss() {
-    cd $(find . -type d -maxdepth 4 | fzf --tac --height 40% --layout=reverse)
+    selection=$(find . -maxdepth 4 -type d -not -path '*/\.*' 2> /dev/null | cut -d/ -f2- | sed -e 's/$/\//' | fzf --tac --prompt "${PWD/#$HOME/\~}/")
+    if [ ! -z "$selection" ]; then
+        cd "$selection"
+    else
+        echo $? > /dev/null
+    fi
 }
+
+# cd to subdir
+#function sx() {
+#    selection=$(find . -maxdepth 4 -type d -not -path '*/\.*' -print 2> /dev/null | cut -d/ -f2- | fzf --tac --height 40% --layout=reverse)
+#    if [ ! -z "$selection" ]; then
+#        cd "$selection"
+#    else
+#        echo $? > /dev/null
+#    fi
+#}
 
 # preview files
 function pv() {
