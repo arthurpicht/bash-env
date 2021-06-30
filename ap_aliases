@@ -6,5 +6,9 @@ alias la='ls -A'
 alias ..='cd ..'
 
 alias clip='xclip -sel clip'
+
+# "Copy to Clipboard Working Directory" without trailing new line
+alias ccwd="pwd | tr -d '\n' | xclip -sel clip"
+
 alias batp='bat --style=plain'
 alias gitlog='git log --oneline --all --graph --decorate'
