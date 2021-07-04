@@ -1,6 +1,6 @@
 alias l='ls -CF'
-alias ll='ls -lhF'
-alias lll='ls -lahF'
+# alias ll='ls -lhF'
+# alias lll='ls -lahF'
 alias la='ls -A'
 
 alias ..='cd ..'

@@ -1,15 +1,21 @@
 
 # This file needs to be sourced from .bashrc
 
-
+# WIP
 # repeat command from history
 function h() {
     eval $(cat ~/.bash_history | fzf +s --tac)
 }
 
+# OK
 # cd to bookmark
 function b() {
-    bookmark=$(cat ~/.bookmarks | fzf --height 40% --layout=reverse)
+    bookmark_file=~/.bookmarks
+    if [ ! -f "${bookmark_file}" ]; then
+        echo "bookmark file ${bookmark_file} not found."
+        return 1
+    fi
+    bookmark=$(cat "${bookmark_file}" | fzf --height 40% --layout=reverse)
     if [ ! -z "$bookmark" ]; then
         cd $bookmark
     else
@@ -17,9 +23,30 @@ function b() {
     fi
 }
 
+# OK
+# edit bookmarked file
+function eb() {
+    bookmark_file=~/.bookmarks_edit
+    if [ ! -f "${bookmark_file}" ]; then
+        echo "bookmark file ${bookmark_file} not found."
+        return 1
+    fi
+    if [ -z "$EDITOR" ]; then
+        echo "\$EDITOR not set, quit operation"
+        return 1
+    fi
+    file=$(cat "${bookmark_file}" | fzf --height 40% --layout=reverse)
+    if [ ! -z "$file" ]; then
+        "${EDITOR}" $file
+    else
+        echo $? > /dev/null
+    fi
+}
+
+# WIP: Error when called in dir without subdir
 # cd to direct subdir
 function s() {
-    selection=$(ls -1 -d */ | fzf --tac --prompt "${PWD/#$HOME/\~}/")
+    selection=$(ls -1 -d --color=always */ | sed '1 i\..' | fzf --reverse --height=99% --ansi --prompt "${PWD/#$HOME/\~}/")
     if [ ! -z "$selection" ]; then
         cd "$selection"
     else
@@ -68,3 +95,17 @@ function pv() {
     find . -maxdepth 4 -type f 2> /dev/null | fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}' > /dev/null
     echo $? > /dev/null
 }
+
+# OK
+# show list of files. Use pager only if output does not fit screen. Do not
+# clear screen after paging.
+function ll() {
+    ls -lhF --color=always "${1:-.}" | less -RFX
+}
+
+# OK
+# dito including hidden files
+function lll() {
+    ls -lAhF --color=always "${1:-.}" | less -RFX
+}
+
