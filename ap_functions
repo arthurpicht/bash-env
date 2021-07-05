@@ -1,5 +1,10 @@
-
+#!/bin/bash
 # This file needs to be sourced from .bashrc
+
+##
+# This file if part of https://github.com/arthurpicht/bash-env
+# licensed to apache 2.0
+##
 
 # WIP
 # repeat command from history
