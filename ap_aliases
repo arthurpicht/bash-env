@@ -15,5 +15,4 @@ alias bp='bat --style=plain'
 
 alias gitlog='git log --oneline --all --graph --decorate'
 
-export PATH=$PATH:~/bin
 export EDITOR=/usr/bin/joe
