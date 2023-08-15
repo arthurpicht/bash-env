@@ -1,7 +1,8 @@
-alias l='ls -CF'
-# alias ll='ls -lhF'
-# alias lll='ls -lahF'
+alias l='ls -F'
+alias ll='ls -lF'
+alias lll='ls -alF'
 alias la='ls -A'
+alias lh='ls -lahF'
 
 alias ..='cd ..'
 
@@ -13,3 +14,6 @@ alias ccwd="pwd | tr -d '\n' | xclip -sel clip"
 alias bp='bat --style=plain'
 
 alias gitlog='git log --oneline --all --graph --decorate'
+
+export PATH=$PATH:~/bin
+export EDITOR=/usr/bin/joe
