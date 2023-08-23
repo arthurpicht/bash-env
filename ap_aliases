@@ -1,3 +1,6 @@
+# make aliases also work as sudo ...
+alias sudo='sudo '
+
 alias l='ls -F'
 alias ll='ls -lF'
 alias lll='ls -alF'
